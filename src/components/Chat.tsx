@@ -2,6 +2,8 @@
 
 import { useChat } from 'ai/react';
 import { useState, useEffect, useRef } from 'react';
+import ChatLoader from './ui/ChatLoader';
+import ChatMessage from './ChatMessage';
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
@@ -9,7 +11,14 @@ export default function Chat() {
       {
         id: 'init',
         role: 'system',
-        content: 'You are a helpful AI assistant. You provide clear, concise, and accurate responses.',
+        content: `You are a helpful AI assistant. You provide clear, concise, and accurate responses.
+When appropriate, use markdown formatting to make your responses more readable:
+- Use **bold** for emphasis
+- Use \`code\` for technical terms
+- Use code blocks for code examples
+- Use bullet points for lists
+- Use tables when comparing items
+- Use > for quotes`,
       },
     ],
   });
@@ -39,26 +48,9 @@ export default function Chat() {
         {messages
           .filter((m) => m.role !== 'system')
           .map((message) => (
-            <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-[80%] rounded-lg p-3 ${
-                  message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-900'
-                }`}>
-                <p className='whitespace-pre-wrap'>{message.content}</p>
-              </div>
-            </div>
+            <ChatMessage key={message.id} content={message.content} role={message.role as 'user' | 'assistant'} />
           ))}
-        {isLoading && (
-          <div className='flex justify-start'>
-            <div className='bg-gray-100 rounded-lg p-3 max-w-[80%]'>
-              <div className='flex gap-2'>
-                <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce' />
-                <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-.3s]' />
-                <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-.5s]' />
-              </div>
-            </div>
-          </div>
-        )}
+        {isLoading && <ChatLoader />}
         {error && <div className='bg-red-50 border border-red-200 text-red-600 rounded-lg p-3 text-sm'>{error}</div>}
         <div ref={messagesEndRef} />
       </div>

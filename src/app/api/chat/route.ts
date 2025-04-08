@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StreamingTextResponse } from 'ai';
 
 // Ollama API endpoint (default for local installation)
 const OLLAMA_API_URL = 'http://localhost:11434/api/generate';
@@ -71,5 +70,11 @@ export async function POST(req: Request) {
   });
 
   // Return the stream as a streaming response
-  return new StreamingTextResponse(stream);
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    },
+  });
 }
