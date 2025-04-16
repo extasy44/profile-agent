@@ -1,7 +1,4 @@
 import { cva } from 'class-variance-authority';
-import { Message } from 'ai';
-
-type MessageRole = Message['role'];
 
 export const messageVariants = cva('flex', {
   variants: {
@@ -87,6 +84,21 @@ export const buttonVariants = cva(
   }
 );
 
+export const tagVariants = cva(
+  'px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        primary: 'w-2 h-2 bg-blue-500 rounded-full mr-2',
+        secondary: 'px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium',
+        disabled: 'w-2 h-2 bg-blue-500 rounded-full mr-2',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+    },
+  }
+);
 export const inputVariants = cva('flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500');
 
 export const selectVariants = cva('block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm');

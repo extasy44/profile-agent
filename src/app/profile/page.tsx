@@ -1,4 +1,5 @@
 import ProfileChat from '@/components/ProfileChat';
+import { tagVariants } from '@/lib/styles';
 
 export default function ProfilePage() {
   return (
@@ -11,12 +12,12 @@ export default function ProfilePage() {
             </div>
           </div>
           <h1 className='text-4xl font-bold text-gray-900 mb-2'>Heejun Seo</h1>
-          <p className='text-xl text-gray-600 mb-4'>Full Stack Developer</p>
+          <p className='text-xl text-gray-600 mb-4'>Frontend/Web Developer with Fullstack Capabilities</p>
           <div className='flex justify-center gap-4 mb-6'>
-            <span className='px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium'>TypeScript</span>
-            <span className='px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium'>React</span>
-            <span className='px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium'>Next.js</span>
-            <span className='px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium'>Node.js</span>
+            <span className={tagVariants({ variant: 'secondary' })}>TypeScript</span>
+            <span className={tagVariants({ variant: 'secondary' })}>React</span>
+            <span className={tagVariants({ variant: 'secondary' })}>Next.js</span>
+            <span className={tagVariants({ variant: 'secondary' })}>Node.js</span>
           </div>
           <p className='text-gray-700 max-w-2xl mx-auto text-lg leading-relaxed'>
             Welcome to my interactive profile! Feel free to chat with my AI assistant to learn more about my experience, skills, and

@@ -13,15 +13,14 @@ interface ChatMessageProps {
   content: string;
 }
 
-interface CodeProps {
+interface CodeProps extends React.HTMLAttributes<HTMLElement> {
   inline?: boolean;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function ChatMessage({ role, content }: ChatMessageProps) {
-  const isUser = role === 'user';
-  const isAssistant = role === 'assistant';
+  if (!content) return null;
 
   return (
     <div className={messageVariants({ role })}>
