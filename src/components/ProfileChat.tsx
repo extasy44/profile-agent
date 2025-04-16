@@ -144,7 +144,7 @@ export default function ProfileChat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask me anything about Heejun's background..."
-            className={inputVariants()}
+            className={`${inputVariants()} text-gray-900 placeholder:text-gray-500`}
             disabled={isLoading}
           />
           <button type='submit' disabled={isLoading} className={buttonVariants({ variant: isLoading ? 'disabled' : 'primary' })}>

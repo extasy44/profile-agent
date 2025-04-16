@@ -1,34 +1,39 @@
+'use client';
+
 import ProfileChat from '@/components/ProfileChat';
-import { tagVariants } from '@/lib/styles';
+import Link from 'next/link';
 
 export default function ProfilePage() {
   return (
-    <div className='min-h-screen bg-gradient-to-b from-gray-50 to-white'>
-      <div className='max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='text-center mb-12'>
-          <div className='inline-block mb-6'>
-            <div className='w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold'>
+    <div className='min-h-screen bg-[#0a192f] text-gray-300'>
+      <div className='max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8'>
+        <div className='text-center mb-16'>
+          <div className='inline-block mb-8'>
+            <Link
+              href='/'
+              className='block w-28 h-28 rounded-full bg-blue-500/10 border-2 border-blue-400/20 hover:bg-blue-500/20 hover:border-blue-400/30 transition-all duration-300 flex items-center justify-center text-blue-400 text-3xl font-mono'>
               HS
-            </div>
+            </Link>
           </div>
-          <h1 className='text-4xl font-bold text-gray-900 mb-2'>Heejun Seo</h1>
-          <p className='text-xl text-gray-600 mb-4'>Frontend/Web Developer with Fullstack Capabilities</p>
-          <div className='flex justify-center gap-4 mb-6'>
-            <span className={tagVariants({ variant: 'secondary' })}>TypeScript</span>
-            <span className={tagVariants({ variant: 'secondary' })}>React</span>
-            <span className={tagVariants({ variant: 'secondary' })}>Next.js</span>
-            <span className={tagVariants({ variant: 'secondary' })}>Node.js</span>
-          </div>
-          <p className='text-gray-700 max-w-2xl mx-auto text-lg leading-relaxed'>
+          <h1 className='text-5xl font-bold text-gray-100 mb-4'>Heejun Seo</h1>
+          <p className='text-xl text-blue-400 mb-6 font-semibold'>Frontend/Web Developer with Fullstack Capabilities</p>
+          {/* <div className='flex justify-center gap-3 mb-8 flex-wrap'>
+            {['TypeScript', 'React', 'Next.js', 'Node.js'].map((tech) => (
+              <span key={tech} className='px-4 py-2 bg-blue-500/5 text-blue-400 rounded-lg border border-blue-500/10 text-sm font-mono'>
+                {tech}
+              </span>
+            ))}
+          </div> */}
+          <p className='text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed'>
             Welcome to my interactive profile! Feel free to chat with my AI assistant to learn more about my experience, skills, and
             projects. The AI has been trained on my professional background and can provide detailed information about my work history,
             technical expertise, and achievements.
           </p>
         </div>
-        <div className='bg-white rounded-2xl shadow-xl overflow-hidden'>
-          <div className='p-6 border-b border-gray-200'>
-            <h2 className='text-xl font-semibold text-gray-900'>Interactive Chat</h2>
-            <p className='text-gray-600 mt-1'>Ask me anything about my professional background</p>
+        <div className='bg-[#112240] rounded-2xl border border-blue-500/10 overflow-hidden'>
+          <div className='p-8 border-b border-blue-500/10'>
+            <h2 className='text-2xl font-semibold text-gray-100 mb-2'>Interactive Chat</h2>
+            <p className='text-gray-400'>Ask me anything about my professional background</p>
           </div>
           <ProfileChat />
         </div>

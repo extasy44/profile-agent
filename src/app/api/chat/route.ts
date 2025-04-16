@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 // Ollama API endpoint (default for local installation)
 const OLLAMA_API_URL = 'http://localhost:11434/api/generate';
 

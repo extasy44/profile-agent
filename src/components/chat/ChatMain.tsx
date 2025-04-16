@@ -43,7 +43,7 @@ export default function ChatMain({ selectedChat }: ChatMainProps) {
               <span className='text-2xl'>🤖</span>
             </div>
             <h2 className='text-2xl font-semibold mb-2'>Welcome to {selectedChat?.title || 'AI Chat'}</h2>
-            <p className='text-center max-w-md'>I'm your AI assistant. Ask me anything, and I&apos;ll help you find answers!</p>
+            <p className='text-center max-w-md'>I&apos;m your AI assistant. Ask me anything, and I&apos;ll help you find answers!</p>
           </div>
         ) : (
           <>
