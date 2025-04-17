@@ -240,7 +240,7 @@ export default function Home() {
                   <span className='group-hover:translate-x-1 inline-block transition-transform duration-300'>Chat with AI →</span>
                 </Link>
                 <Link
-                  href='mailto:your.email@example.com'
+                  href='mailto:seoheejun@gmail.com'
                   className='group px-8 py-4 bg-blue-500/5 hover:bg-blue-500/10 text-gray-400 hover:text-gray-300 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30'>
                   <span className='group-hover:translate-x-1 inline-block transition-transform duration-300'>Send Email →</span>
                 </Link>
