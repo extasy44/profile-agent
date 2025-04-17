@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Chatbot UI',
-  description: 'A modern chatbot interface',
+  title: 'Heejun Seo - Web Developer, Frontend Developer, Fullstack Developer, AI Developer',
+  description: 'Heejun Seo - Web Developer, Frontend Developer, Fullstack Developer, AI Developer',
 };
 
 export default function RootLayout({
