@@ -3,7 +3,6 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import Image from 'next/image';
 
 export default function LoginPage() {
   const { loginWithGoogle, loginWithGithub, isLoading } = useAuth();
@@ -27,7 +26,7 @@ export default function LoginPage() {
       <div className='max-w-md w-full space-y-8 bg-white/5 p-8 rounded-xl backdrop-blur-sm'>
         <div className='text-center'>
           <h2 className='text-3xl font-bold text-white mb-2'>Welcome Back</h2>
-          <p className='text-white/60'>Sign in to continue to Chatbot UI</p>
+          <p className='text-white/60'>Sign in to continue to Heejun Seo&apos;s Profile</p>
         </div>
 
         {error && <div className='bg-red-500/10 border border-red-500/50 text-red-500 rounded-lg p-4 text-sm'>{error}</div>}
