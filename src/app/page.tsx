@@ -235,7 +235,7 @@ export default function Home() {
               </p>
               <div className='flex justify-center gap-6'>
                 <Link
-                  href='/profile-chat'
+                  href='/profile'
                   className='group px-8 py-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 border border-blue-500/20 hover:border-blue-500/40'>
                   <span className='group-hover:translate-x-1 inline-block transition-transform duration-300'>Chat with AI →</span>
                 </Link>
