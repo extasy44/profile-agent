@@ -49,7 +49,6 @@ export default function ProfileChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-
   useEffect(() => {
     // Only auto-scroll to bottom when new messages are added, not on initial load
     if (messages.length > 0) {
