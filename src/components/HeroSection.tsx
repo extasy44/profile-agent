@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
-import { headingVariants, typographyVariants, animationVariants } from '@/lib/styles';
+import { headingVariants, typographyVariants, buttonVariants } from '@/lib/styles';
 import { cn } from '@/lib/utils';
 
 export function HeroSection() {
@@ -20,16 +19,22 @@ export function HeroSection() {
             leverage the latest in machine learning and intelligent automation.
           </p>
           <div className='flex gap-4 flex-wrap'>
-            <Button
-              variant='brand'
-              size='lg'
-              asChild
-              className='bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl border border-primary/20'>
-              <Link href='/profile'>Chat with AI →</Link>
-            </Button>
-            <Button variant='outline' size='lg' asChild className='border-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-cyan shadow-sm'>
-              <Link href='#contact'>Get in Touch</Link>
-            </Button>
+            <Link
+              href='/profile'
+              className={cn(
+                buttonVariants({ variant: 'brand', size: 'lg' }),
+                'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl border border-primary/20'
+              )}>
+              Chat with AI →
+            </Link>
+            <Link
+              href='#contact'
+              className={cn(
+                buttonVariants({ variant: 'outline', size: 'lg' }),
+                'border-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-cyan shadow-sm'
+              )}>
+              Get in Touch
+            </Link>
           </div>
         </div>
       </div>

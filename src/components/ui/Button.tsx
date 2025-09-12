@@ -5,12 +5,11 @@ import { forwardRef } from 'react';
 interface ButtonProps 
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     ButtonVariants {
-  asChild?: boolean;
   loading?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, loading = false, children, disabled, ...props }, ref) => {
+  ({ className, variant, size, loading = false, children, disabled, ...props }, ref) => {
     const isDisabled = disabled || loading;
 
     return (

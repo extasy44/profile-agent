@@ -7,7 +7,7 @@ import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { MobileNavigation } from '@/components/MobileNavigation';
 import { SideNavigation } from '@/components/SideNavigation';
 import { HeroSection } from '@/components/HeroSection';
-import { headingVariants, typographyVariants, cardVariants, animationVariants } from '@/lib/styles';
+import { headingVariants, typographyVariants, cardVariants, animationVariants, buttonVariants } from '@/lib/styles';
 import { cn } from '@/lib/utils';
 import { skillCategories, professionalSkills, workExperience, education } from '@/data/portfolio';
 
@@ -127,7 +127,7 @@ export default function Home() {
                     <h3 className={cn(headingVariants({ level: 3 }), 'neon-text-green')}>Quick Learner & AI Enthusiast</h3>
                   </div>
                   <p className={cn(typographyVariants({ variant: 'muted', size: 'lg' }), 'max-w-2xl mx-auto')}>
-                    With 6+ years of frontend development experience, I'm passionate about building scalable, high-performance applications
+                    With 6+ years of frontend development experience, I&apos;m passionate about building scalable, high-performance applications
                     with a strong focus on user experience, accessibility, and security. Enthusiastic about AI programming and its
                     implementation in frontend development to enhance automation, personalization, and intelligent user interactions. I
                     thrive on learning new technologies quickly and applying them to solve real-world problems.
@@ -236,20 +236,16 @@ export default function Home() {
                 to get back to you!
               </p>
               <div className='flex justify-center gap-6 flex-wrap'>
-                <Button
-                  variant='brand'
-                  size='lg'
-                  asChild
-                  className='bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl border border-primary/20'>
-                  <Link href='/profile'>Chat with AI →</Link>
-                </Button>
-                <Button
-                  variant='outline'
-                  size='lg'
-                  asChild
-                  className='border-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-cyan shadow-sm'>
-                  <Link href='mailto:seoheejun@gmail.com'>Send Email →</Link>
-                </Button>
+                <Link
+                  href='/profile'
+                  className={cn(buttonVariants({ variant: 'brand', size: 'lg' }), 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl border border-primary/20')}>
+                  Chat with AI →
+                </Link>
+                <Link
+                  href='mailto:seoheejun@gmail.com'
+                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'border-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-cyan shadow-sm')}>
+                  Send Email →
+                </Link>
               </div>
             </div>
           </div>

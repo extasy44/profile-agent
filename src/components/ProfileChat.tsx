@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { OpenAI } from 'openai';
 import ChatMessage from './ChatMessage';
 import ChatLoader from './ui/ChatLoader';
-import { buttonVariants, inputVariants, badgeVariants } from '@/lib/styles';
+import { buttonVariants, inputVariants } from '@/lib/styles';
 import { profileChunk } from '@/docs/profile';
 import { ChatMessage as ChatMessageType } from '@/lib/types';
 
@@ -49,12 +49,6 @@ export default function ProfileChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToTop = () => {
-    const chatContainer = document.querySelector('.overflow-y-auto');
-    if (chatContainer) {
-      chatContainer.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
 
   useEffect(() => {
     // Only auto-scroll to bottom when new messages are added, not on initial load
