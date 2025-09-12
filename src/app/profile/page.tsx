@@ -1,9 +1,8 @@
 'use client';
 
 import ProfileChat from '@/components/ProfileChat';
-import { Button } from '@/components/ui/Button';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
-import { headingVariants, typographyVariants, cardVariants, animationVariants } from '@/lib/styles';
+import { headingVariants, typographyVariants, cardVariants, animationVariants, buttonVariants } from '@/lib/styles';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -54,12 +53,16 @@ export default function ProfilePage() {
         {/* Quick Actions */}
         <div className='mt-12 text-center'>
           <div className='flex justify-center gap-4 flex-wrap'>
-            <Button variant='outline' size='lg' asChild>
-              <Link href='/'>← Back to Portfolio</Link>
-            </Button>
-            <Button variant='brand' size='lg' asChild>
-              <Link href='mailto:seoheejun@gmail.com'>Contact Me</Link>
-            </Button>
+            <Link
+              href='/'
+              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}>
+              ← Back to Portfolio
+            </Link>
+            <Link
+              href='mailto:seoheejun@gmail.com'
+              className={cn(buttonVariants({ variant: 'brand', size: 'lg' }))}>
+              Contact Me
+            </Link>
           </div>
         </div>
       </div>
