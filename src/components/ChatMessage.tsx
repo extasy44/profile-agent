@@ -59,12 +59,12 @@ export default function ChatMessage({ role, content }: ChatMessageProps) {
                 );
               },
               blockquote({ children }) {
-                return <blockquote className='border-l-4 border-gray-300 pl-4 italic'>{children}</blockquote>;
+                return <blockquote className='border-l-4 border-border pl-4 italic text-muted-foreground'>{children}</blockquote>;
               },
               table({ children }) {
                 return (
                   <div className='overflow-x-auto'>
-                    <table className='min-w-full divide-y divide-gray-300'>{children}</table>
+                    <table className='min-w-full divide-y divide-border'>{children}</table>
                   </div>
                 );
               },

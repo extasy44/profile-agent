@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
-import { mockApiService } from '@/services/mockApi';
 import { useAuth } from '@/contexts/AuthContext';
 
 export interface Chat {
@@ -11,6 +10,14 @@ export interface Chat {
   title: string;
   lastMessage?: string;
 }
+
+// Mock chat history for portfolio demonstration
+const mockChatHistory = [
+  { title: 'AI Integration Discussion', lastMessage: 'How can we implement AI features?' },
+  { title: 'React Performance Tips', lastMessage: 'Best practices for optimization' },
+  { title: 'TypeScript Advanced Patterns', lastMessage: 'Generic types and utility types' },
+  { title: 'Next.js 14 Features', lastMessage: 'Server components and app router' },
+];
 
 export default function ChatSidebar({ onSelectChat }: { onSelectChat: (chat: Chat) => void }) {
   const { user, logout } = useAuth();
@@ -26,9 +33,10 @@ export default function ChatSidebar({ onSelectChat }: { onSelectChat: (chat: Cha
 
   const loadChatHistory = async () => {
     try {
-      const history = await mockApiService.getChatHistory();
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 500));
       setChats(
-        history.map((chat, index) => ({
+        mockChatHistory.map((chat, index) => ({
           id: `history-${index}`,
           title: chat.title,
           lastMessage: chat.lastMessage,

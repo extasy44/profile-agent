@@ -18,13 +18,13 @@ export default function ChatMain({ selectedChat }: ChatMainProps) {
     // This is handled by the chat selection logic
   }, [selectedChat?.id]);
 
-  // Scroll to bottom when messages change
+  // Scroll to bottom when messages change or when AI is loading
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, isLoading]);
 
   return (
-    <div className='flex-1 flex flex-col h-full'>
+    <div className='flex-1 flex flex-col h-full max-w-4xl mx-auto w-full'>
       {/* Chat Header */}
       <div className='border-b border-white/10 p-4 flex items-center justify-between'>
         <div className='flex items-center gap-2'>
@@ -38,15 +38,15 @@ export default function ChatMain({ selectedChat }: ChatMainProps) {
       {/* Chat Messages */}
       <div className='flex-1 overflow-y-auto p-4 space-y-4'>
         {messages.length === 0 ? (
-          <div className='h-full flex flex-col items-center justify-center text-white/50'>
+          <div className='h-full flex flex-col items-center justify-center text-white/50 px-4'>
             <div className='w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4'>
               <span className='text-2xl'>🤖</span>
             </div>
-            <h2 className='text-2xl font-semibold mb-2'>Welcome to {selectedChat?.title || 'AI Chat'}</h2>
+            <h2 className='text-2xl font-semibold mb-2 text-center'>Welcome to {selectedChat?.title || 'AI Chat'}</h2>
             <p className='text-center max-w-md'>I&apos;m your AI assistant. Ask me anything, and I&apos;ll help you find answers!</p>
           </div>
         ) : (
-          <>
+          <div className='min-h-full flex flex-col justify-end'>
             <div className='space-y-4'>
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -58,20 +58,23 @@ export default function ChatMain({ selectedChat }: ChatMainProps) {
                   </div>
                 </div>
               ))}
-            </div>
-            {isLoading && (
-              <div className='flex justify-start'>
-                <div className='bg-white/10 text-white rounded-lg p-4 max-w-[80%] flex items-center gap-2'>
-                  <div className='flex gap-2'>
-                    <span className='w-2 h-2 bg-white/50 rounded-full animate-bounce [animation-delay:-0.3s]'></span>
-                    <span className='w-2 h-2 bg-white/50 rounded-full animate-bounce [animation-delay:-0.15s]'></span>
-                    <span className='w-2 h-2 bg-white/50 rounded-full animate-bounce'></span>
+              {isLoading && (
+                <div className='flex justify-start'>
+                  <div className='bg-muted/50 backdrop-blur-sm rounded-lg p-4 max-w-[80%] border border-border/50'>
+                    <div className='flex items-center gap-3'>
+                      <div className='flex gap-1'>
+                        <div className='w-2 h-2 bg-primary/60 rounded-full animate-pulse [animation-delay:0ms] [animation-duration:1.5s]'></div>
+                        <div className='w-2 h-2 bg-primary/60 rounded-full animate-pulse [animation-delay:200ms] [animation-duration:1.5s]'></div>
+                        <div className='w-2 h-2 bg-primary/60 rounded-full animate-pulse [animation-delay:400ms] [animation-duration:1.5s]'></div>
+                      </div>
+                      <span className='text-sm text-muted-foreground font-medium'>AI is thinking...</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
             <div ref={messagesEndRef} />
-          </>
+          </div>
         )}
       </div>
 

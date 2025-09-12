@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { OpenAI } from 'openai';
 import ChatMessage from './ChatMessage';
 import ChatLoader from './ui/ChatLoader';
-import { buttonVariants, inputVariants, tagVariants } from '@/lib/styles';
+import { buttonVariants, inputVariants, badgeVariants } from '@/lib/styles';
 import { profileChunk } from '@/docs/profile';
 import { ChatMessage as ChatMessageType } from '@/lib/types';
 
@@ -49,9 +49,26 @@ export default function ProfileChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToTop = () => {
+    const chatContainer = document.querySelector('.overflow-y-auto');
+    if (chatContainer) {
+      chatContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
+    // Only auto-scroll to bottom when new messages are added, not on initial load
+    if (messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages.length]);
+
+  useEffect(() => {
+    // Scroll to bottom when loading state changes (new message being typed)
+    if (isLoading) {
+      scrollToBottom();
+    }
+  }, [isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,51 +120,58 @@ export default function ProfileChat() {
   };
 
   return (
-    <div className='flex flex-col h-[600px]'>
-      <div className='flex-1 overflow-y-auto p-6 space-y-4'>
+    <div className='flex flex-col h-[600px] max-w-4xl mx-auto'>
+      <div className='flex-1 overflow-y-auto p-6 space-y-4 relative'>
         {messages.length === 0 && !isLoading && (
-          <div className='text-center text-gray-500 space-y-4'>
-            <div className='bg-gray-50 rounded-lg p-6 max-w-2xl mx-auto'>
-              <p className='text-lg mb-4'>Hi! I&apos;m an AI assistant trained to discuss Heejun&apos;s professional background.</p>
-              <p className='font-medium mb-2'>You can ask me about:</p>
+          <div className='text-center text-muted-foreground space-y-4 w-full'>
+            <div className='bg-card rounded-lg p-6 max-w-2xl mx-auto border border-border'>
+              <p className='text-lg mb-4 text-foreground'>
+                Hi! I&apos;m an AI assistant trained to discuss Heejun&apos;s professional background.
+              </p>
+              <p className='font-medium mb-2 text-foreground'>You can ask me about:</p>
               <ul className='space-y-2 text-left'>
-                <li className='flex items-center'>
-                  <span className={tagVariants({ variant: 'primary' })}></span>
-                  Technical skills and expertise
-                </li>
-                <li className='flex items-center'>
-                  <span className={tagVariants({ variant: 'primary' })}></span>
-                  Work experience and projects
-                </li>
-                <li className='flex items-center'>
-                  <span className={tagVariants({ variant: 'primary' })}></span>
-                  Education and certifications
-                </li>
-                <li className='flex items-center'>
-                  <span className={tagVariants({ variant: 'primary' })}></span>
-                  Professional achievements
-                </li>
+                <li className='flex items-center'>Technical skills and expertise</li>
+                <li className='flex items-center'>Work experience and projects</li>
+                <li className='flex items-center'>Education and certifications</li>
+                <li className='flex items-center'>Professional achievements</li>
               </ul>
             </div>
           </div>
         )}
-        {messages.map((message, index) => (
-          <ChatMessage key={index} role={message.role} content={message.content} />
-        ))}
-        {isLoading && <ChatLoader />}
+        {messages.length > 0 && (
+          <div className='w-full space-y-4 pt-4'>
+            {/* Conversation start indicator */}
+            <div className='flex items-center justify-center py-2'>
+              <div className='flex items-center gap-2 text-xs text-muted-foreground'>
+                <div className='h-px bg-border flex-1'></div>
+                <span className='px-2 bg-background'>Conversation started</span>
+                <div className='h-px bg-border flex-1'></div>
+              </div>
+            </div>
+            <div className='space-y-4'>
+              {messages.map((message, index) => (
+                <div key={index} className={index === 0 ? 'relative' : ''}>
+                  <ChatMessage role={message.role} content={message.content} />
+                </div>
+              ))}
+              {isLoading && <ChatLoader />}
+            </div>
+          </div>
+        )}
+
         <div ref={messagesEndRef} />
       </div>
 
-      <div className='border-t border-gray-200 p-4 bg-gray-50'>
+      <div className='border-t border-border p-4 bg-muted/30'>
         <form onSubmit={handleSubmit} className='flex gap-2'>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask me anything about Heejun's background..."
-            className={`${inputVariants()} text-gray-900 placeholder:text-gray-500`}
+            className={`${inputVariants()} text-foreground placeholder:text-muted-foreground bg-background border-border focus:border-primary focus:ring-primary`}
             disabled={isLoading}
           />
-          <button type='submit' disabled={isLoading} className={buttonVariants({ variant: isLoading ? 'disabled' : 'primary' })}>
+          <button type='submit' disabled={isLoading} className={buttonVariants({ variant: isLoading ? 'secondary' : 'default' })}>
             {isLoading ? 'Sending...' : 'Send'}
           </button>
         </form>

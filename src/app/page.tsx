@@ -1,13 +1,22 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { Button } from '@/components/ui/Button';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { MobileNavigation } from '@/components/MobileNavigation';
+import { SideNavigation } from '@/components/SideNavigation';
+import { HeroSection } from '@/components/HeroSection';
+import { headingVariants, typographyVariants, cardVariants, animationVariants } from '@/lib/styles';
+import { cn } from '@/lib/utils';
+import { skillCategories, professionalSkills, workExperience, education } from '@/data/portfolio';
+
+const SECTIONS = ['About', 'Skills', 'Experience', 'Education', 'Contact'];
 
 export default function Home() {
-  const sections = ['About', 'Skills', 'Experience', 'Education', 'Contact'];
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Smooth scroll behavior for anchor links
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
@@ -17,6 +26,7 @@ export default function Home() {
       const section = document.querySelector(link.hash);
       if (section) {
         section.scrollIntoView({ behavior: 'smooth' });
+        setIsMobileMenuOpen(false);
       }
     };
 
@@ -24,107 +34,121 @@ export default function Home() {
     return () => document.removeEventListener('click', handleAnchorClick);
   }, []);
 
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
   return (
-    <div className='min-h-screen bg-[#0a192f] text-gray-300 relative'>
-      {/* Side Navigation */}
-      <nav className='fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block'>
-        <ul className='space-y-6'>
-          {sections.map((section) => (
-            <li key={section}>
-              <a
-                href={`#${section.toLowerCase()}`}
-                className='flex items-center gap-4 text-gray-400 hover:text-blue-400 transition-colors group'>
-                <span className='w-8 h-[1px] bg-gray-400 group-hover:bg-blue-400 group-hover:w-16 transition-all duration-300'></span>
-                <span className='text-sm font-medium tracking-wider'>{section}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <div className='min-h-screen bg-background text-foreground relative tech-grid-dark'>
+      {/* Theme Switcher */}
+      <div className='fixed top-6 right-6 z-50'>
+        <ThemeSwitcher />
+      </div>
+
+      {/* Navigation Components */}
+      <MobileNavigation sections={SECTIONS} isOpen={isMobileMenuOpen} onToggle={toggleMobileMenu} onClose={closeMobileMenu} />
+      <SideNavigation sections={SECTIONS} />
+
+      {/* Animated background elements */}
+      <div className='fixed inset-0 overflow-hidden pointer-events-none'>
+        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl animate-pulse'></div>
+        <div className='absolute top-3/4 right-1/4 w-80 h-80 bg-neon-purple/10 rounded-full blur-3xl animate-pulse delay-1000'></div>
+        <div className='absolute bottom-1/4 left-1/3 w-64 h-64 bg-neon-green/10 rounded-full blur-3xl animate-pulse delay-2000'></div>
+      </div>
 
       <main className='relative'>
-        {/* Hero Section */}
-        <section id='about' className='min-h-screen flex items-center py-24 relative'>
-          <div className='absolute inset-0 bg-gradient-to-b from-[#0a192f] to-[#112240] pointer-events-none'></div>
-          <div className='container mx-auto px-6 relative'>
-            <div className='max-w-3xl'>
-              <div className='text-blue-400 mb-4 ml-1 font-mono'>Hi, my name is</div>
-              <h1 className='text-5xl md:text-7xl font-bold text-gray-100 mb-4'>Heejun Seo</h1>
-              <h2 className='text-3xl md:text-5xl font-bold text-gray-400 mb-8'>I build things for the web.</h2>
-              <p className='text-lg text-gray-400 mb-12 leading-relaxed max-w-xl'>
-                I&apos;m a senior frontend developer specializing in building exceptional digital experiences. Currently, I&apos;m focused
-                on building accessible, human-centered products.
-              </p>
-              <div className='flex gap-4'>
-                <Link
-                  href='/profile'
-                  className='group px-8 py-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 border border-blue-500/20 hover:border-blue-500/40'>
-                  <span className='group-hover:translate-x-1 inline-block transition-transform duration-300'>Chat with AI →</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeroSection />
 
         {/* Skills Section */}
         <section id='skills' className='py-32 relative'>
-          <div className='absolute inset-0 bg-[#112240] pointer-events-none'></div>
-          <div className='container mx-auto px-6 relative'>
+          <div className='absolute inset-0 bg-muted/10 pointer-events-none'></div>
+          <div className='container mx-auto px-6 relative lg:ml-32'>
             <div className='max-w-5xl mx-auto'>
-              <h2 className='text-2xl font-semibold text-blue-400 mb-4 font-mono'>Skills</h2>
-              <h3 className='text-4xl font-bold text-gray-100 mb-16'>Technical Expertise</h3>
+              <div className={cn(typographyVariants({ variant: 'info' }), 'mb-4 font-mono neon-text-purple')}>Skills</div>
+              <h2 className={cn(headingVariants({ level: 2 }), 'mb-16 neon-text-green')}>Technical Expertise</h2>
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-                {[
-                  {
-                    title: 'Frontend Development',
-                    skills: ['React', 'TypeScript', 'Next.js', 'Redux', 'HTML/CSS'],
-                  },
-                  {
-                    title: 'Backend & Cloud',
-                    skills: ['Node.js', 'AWS', 'Azure Cloud', 'REST APIs', 'SQL'],
-                  },
-                  {
-                    title: 'Tools & Practices',
-                    skills: ['Git', 'CI/CD', 'Jest', 'Webpack', 'Azure DevOps'],
-                  },
-                ].map((category, index) => (
+                {skillCategories.map((category, index) => (
                   <div
                     key={index}
-                    className='bg-blue-500/5 p-8 rounded-lg border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-blue-500/5'>
-                    <h3 className='text-xl font-semibold text-gray-100 mb-6'>{category.title}</h3>
-                    <ul className='space-y-3'>
+                    className={cn(
+                      'glass-morphism-dark rounded-xl p-6 backdrop-blur-sm border border-neon-cyan/20',
+                      'hover:border-neon-cyan/40 hover:shadow-lg hover:shadow-neon-cyan/10',
+                      'tech-hover transition-all duration-300',
+                      animationVariants({ type: 'slideUp', delay: index === 0 ? 'sm' : index === 1 ? 'default' : 'lg' })
+                    )}>
+                    <div className='mb-6'>
+                      <h3 className={cn(headingVariants({ level: 4 }), 'neon-text-green')}>{category.title}</h3>
+                    </div>
+                    <div className='flex flex-wrap gap-2'>
                       {category.skills.map((skill, skillIndex) => (
-                        <li key={skillIndex} className='flex items-center text-gray-400'>
-                          <span className='w-2 h-2 bg-blue-400/50 rounded-full mr-3'></span>
+                        <span
+                          key={skillIndex}
+                          className='px-3 py-1.5 bg-neon-cyan/10 text-neon-cyan text-sm rounded-full border border-neon-cyan/30 hover:bg-neon-cyan/20 hover:border-neon-cyan/50 transition-all duration-300 hover:scale-105'>
                           {skill}
-                        </li>
+                        </span>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 ))}
               </div>
 
-              {/* Soft Skills */}
+              {/* Professional Excellence */}
               <div className='mt-16'>
-                <h3 className='text-2xl font-semibold text-gray-100 mb-8'>Professional Skills</h3>
-                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                  {[
-                    'Problem Solving',
-                    'Quick Learner',
-                    'Team Collaboration',
-                    'Client Communication',
-                    'Solution-Oriented',
-                    'Self-Motivated',
-                    'Adaptability',
-                    'Continuous Learning',
-                  ].map((skill, index) => (
+                <h3 className={cn(headingVariants({ level: 3 }), 'mb-8 text-center neon-text-green')}>Professional Excellence</h3>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                  {professionalSkills.map((section, index) => (
                     <div
                       key={index}
-                      className='bg-blue-500/5 px-4 py-3 rounded-lg border border-blue-500/10 text-gray-400 text-sm flex items-center gap-2'>
-                      <span className='w-1.5 h-1.5 bg-blue-400/50 rounded-full'></span>
-                      {skill}
+                      className={cn(
+                        'glass-morphism-dark rounded-xl p-6 backdrop-blur-sm border border-neon-cyan/20 hover:border-neon-cyan/40 tech-hover'
+                      )}>
+                      <div className={cn('w-full h-1 rounded-full mb-4 neon-glow', `bg-${section.color}`)}></div>
+                      <h4 className={cn(headingVariants({ level: 5 }), 'mb-4 neon-text-green')}>{section.title}</h4>
+                      <div className='space-y-2'>
+                        {section.skills.map((skill, skillIndex) => (
+                          <div key={skillIndex} className='flex items-center gap-2 text-sm text-muted-foreground'>
+                            <span className={cn('w-2 h-2 rounded-full pulse-neon', `bg-${section.color}`)}></span>
+                            {skill}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Quick Learner & Adaptability */}
+              <div className='mt-12 text-center'>
+                <div
+                  className={cn(
+                    'glass-morphism-dark rounded-xl p-8 backdrop-blur-sm border border-neon-cyan/20 hover:border-neon-cyan/40 tech-hover max-w-4xl mx-auto'
+                  )}>
+                  <div className='flex items-center justify-center gap-3 mb-4'>
+                    <span className='text-3xl pulse-neon'>⚡</span>
+                    <h3 className={cn(headingVariants({ level: 3 }), 'neon-text-green')}>Quick Learner & AI Enthusiast</h3>
+                  </div>
+                  <p className={cn(typographyVariants({ variant: 'muted', size: 'lg' }), 'max-w-2xl mx-auto')}>
+                    With 6+ years of frontend development experience, I'm passionate about building scalable, high-performance applications
+                    with a strong focus on user experience, accessibility, and security. Enthusiastic about AI programming and its
+                    implementation in frontend development to enhance automation, personalization, and intelligent user interactions. I
+                    thrive on learning new technologies quickly and applying them to solve real-world problems.
+                  </p>
+                  <div className='flex flex-wrap justify-center gap-3 mt-6'>
+                    {[
+                      '6+ Years Experience',
+                      'AI Integration Expert',
+                      'Performance Optimizer',
+                      'Accessibility Advocate',
+                      'Cloud Computing',
+                    ].map((trait, index) => (
+                      <span
+                        key={index}
+                        className={cn(
+                          'px-4 py-2 bg-neon-purple/10 text-neon-purple text-xs rounded-full border border-neon-purple/30 hover:bg-neon-purple/20 hover:border-neon-purple/50 transition-all duration-300 hover:scale-105'
+                        )}>
+                        {trait}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,46 +157,39 @@ export default function Home() {
 
         {/* Experience Section */}
         <section id='experience' className='py-32 relative'>
-          <div className='absolute inset-0 bg-[#0a192f] pointer-events-none'></div>
-          <div className='container mx-auto px-6 relative'>
+          <div className='absolute inset-0 bg-background pointer-events-none'></div>
+          <div className='container mx-auto px-6 relative lg:ml-32'>
             <div className='max-w-5xl mx-auto'>
-              <h2 className='text-2xl font-semibold text-blue-400 mb-4 font-mono'>Experience</h2>
-              <h3 className='text-4xl font-bold text-gray-100 mb-16'>Where I&apos;ve Worked</h3>
+              <div className={cn(typographyVariants({ variant: 'info' }), 'mb-4 font-mono')}>Experience</div>
+              <h2 className={cn(headingVariants({ level: 2 }), 'mb-16')}>Where I&apos;ve Worked</h2>
               <div className='space-y-12'>
-                {[
-                  {
-                    company: 'LMI Group',
-                    role: 'Senior Frontend Developer',
-                    period: 'Nov 2023 - Present',
-                    description:
-                      'Leading frontend development using React and TypeScript, ensuring scalable and maintainable architecture. Collaborating with product teams to define new features and optimize performance.',
-                  },
-                  {
-                    company: 'LMI Group',
-                    role: 'Frontend Developer',
-                    period: 'July 2021 - Nov 2023',
-                    description:
-                      'Developed responsive web apps using React, Redux, and Next.js. Refactored legacy systems into component-based architecture and implemented CI/CD pipelines.',
-                  },
-                  {
-                    company: 'Computers and Parts Land',
-                    role: 'eCommerce Developer',
-                    period: 'Apr 2013 - Jun 2021',
-                    description:
-                      'Managed Magento-based platforms with 30,000+ products, built tools for inventory and pricing, and created custom POS integrations.',
-                  },
-                ].map((job, index) => (
+                {workExperience.map((job, index) => (
                   <div
                     key={index}
-                    className='bg-blue-500/5 p-8 rounded-lg border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-blue-500/5'>
-                    <div className='flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6'>
+                    className={cn(
+                      cardVariants({ variant: 'elevated', padding: 'lg' }),
+                      'tech-hover',
+                      animationVariants({ type: 'slideUp', delay: index === 0 ? 'sm' : index === 1 ? 'default' : 'lg' })
+                    )}>
+                    <div className='flex flex-col md:flex-row md:items-center md:justify-between mb-4'>
                       <div>
-                        <h3 className='text-xl font-semibold text-gray-100'>{job.company}</h3>
-                        <p className='text-blue-400'>{job.role}</p>
+                        <h3 className={cn(headingVariants({ level: 4 }), 'text-primary')}>{job.role}</h3>
+                        <p className={cn(typographyVariants({ variant: 'info', size: 'lg' }), 'font-semibold')}>{job.company}</p>
                       </div>
-                      <span className='text-gray-500 font-mono'>{job.period}</span>
+                      <span className={cn(typographyVariants({ variant: 'muted' }), 'text-sm mt-2 md:mt-0')}>{job.period}</span>
                     </div>
-                    <p className='text-gray-400 leading-relaxed'>{job.description}</p>
+                    <p className={cn(typographyVariants({ variant: 'muted', size: 'default' }), 'mb-4 leading-relaxed')}>
+                      {job.description}
+                    </p>
+                    <div className='flex flex-wrap gap-2'>
+                      {job.highlights.map((highlight, highlightIndex) => (
+                        <span
+                          key={highlightIndex}
+                          className='px-3 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20'>
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -182,39 +199,24 @@ export default function Home() {
 
         {/* Education Section */}
         <section id='education' className='py-32 relative'>
-          <div className='absolute inset-0 bg-[#112240] pointer-events-none'></div>
-          <div className='container mx-auto px-6 relative'>
+          <div className='absolute inset-0 bg-muted/10 pointer-events-none'></div>
+          <div className='container mx-auto px-6 relative lg:ml-32'>
             <div className='max-w-5xl mx-auto'>
-              <h2 className='text-2xl font-semibold text-blue-400 mb-4 font-mono'>Education</h2>
-              <h3 className='text-4xl font-bold text-gray-100 mb-16'>Academic Background</h3>
+              <div className={cn(typographyVariants({ variant: 'info' }), 'mb-4 font-mono')}>Education</div>
+              <h2 className={cn(headingVariants({ level: 2 }), 'mb-16')}>Academic Background</h2>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                {[
-                  {
-                    institution: 'Swinburne University',
-                    degree: 'Bachelor of Information and Communication Technology',
-                    period: '2011 - 2013',
-                    major: 'Network Security and Design',
-                  },
-                  {
-                    institution: 'Holmesglen Institute',
-                    degree: 'Diploma of IT',
-                    period: '2009 - 2011',
-                    major: 'Software Development',
-                  },
-                  {
-                    institution: 'Monash University',
-                    degree: 'Data Analytics and Visualization',
-                    period: '2021',
-                    major: 'Bootcamp',
-                  },
-                ].map((edu, index) => (
+                {education.map((edu, index) => (
                   <div
                     key={index}
-                    className='bg-blue-500/5 p-8 rounded-lg border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-blue-500/5'>
-                    <h3 className='text-xl font-semibold text-gray-100 mb-3'>{edu.institution}</h3>
-                    <p className='text-blue-400 mb-2'>{edu.degree}</p>
-                    <p className='text-gray-400 mb-2'>{edu.major}</p>
-                    <p className='text-gray-500 font-mono'>{edu.period}</p>
+                    className={cn(
+                      cardVariants({ variant: 'elevated', padding: 'lg' }),
+                      'tech-hover text-center',
+                      animationVariants({ type: 'slideUp', delay: index === 0 ? 'sm' : index === 1 ? 'default' : 'lg' })
+                    )}>
+                    <h3 className={cn(headingVariants({ level: 5 }), 'text-primary mb-2')}>{edu.degree}</h3>
+                    <p className={cn(typographyVariants({ variant: 'info', size: 'sm' }), 'font-semibold mb-2')}>{edu.institution}</p>
+                    <p className={cn(typographyVariants({ variant: 'muted', size: 'sm' }), 'mb-3')}>{edu.period}</p>
+                    <p className={cn(typographyVariants({ variant: 'muted', size: 'sm' }), 'leading-relaxed')}>{edu.description}</p>
                   </div>
                 ))}
               </div>
@@ -224,26 +226,30 @@ export default function Home() {
 
         {/* Contact Section */}
         <section id='contact' className='py-32 relative'>
-          <div className='absolute inset-0 bg-[#0a192f] pointer-events-none'></div>
-          <div className='container mx-auto px-6 relative'>
+          <div className='absolute inset-0 bg-gradient-to-b from-background to-muted/20 pointer-events-none'></div>
+          <div className='container mx-auto px-6 relative lg:ml-32'>
             <div className='max-w-3xl mx-auto text-center'>
-              <h2 className='text-2xl font-semibold text-blue-400 mb-4 font-mono'>What&apos;s Next?</h2>
-              <h3 className='text-4xl font-bold text-gray-100 mb-8'>Get In Touch</h3>
-              <p className='text-lg text-gray-400 mb-12 leading-relaxed'>
+              <div className={cn(typographyVariants({ variant: 'info' }), 'mb-4 font-mono neon-text-purple')}>What&apos;s Next?</div>
+              <h2 className={cn(headingVariants({ level: 2 }), 'mb-8 neon-text-green')}>Get In Touch</h2>
+              <p className={cn(typographyVariants({ size: 'lg' }), 'mb-12 leading-relaxed text-muted-foreground')}>
                 I&apos;m currently looking for new opportunities. Whether you have a question or just want to say hi, I&apos;ll try my best
                 to get back to you!
               </p>
-              <div className='flex justify-center gap-6'>
-                <Link
-                  href='/profile'
-                  className='group px-8 py-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 border border-blue-500/20 hover:border-blue-500/40'>
-                  <span className='group-hover:translate-x-1 inline-block transition-transform duration-300'>Chat with AI →</span>
-                </Link>
-                <Link
-                  href='mailto:seoheejun@gmail.com'
-                  className='group px-8 py-4 bg-blue-500/5 hover:bg-blue-500/10 text-gray-400 hover:text-gray-300 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30'>
-                  <span className='group-hover:translate-x-1 inline-block transition-transform duration-300'>Send Email →</span>
-                </Link>
+              <div className='flex justify-center gap-6 flex-wrap'>
+                <Button
+                  variant='brand'
+                  size='lg'
+                  asChild
+                  className='bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl border border-primary/20'>
+                  <Link href='/profile'>Chat with AI →</Link>
+                </Button>
+                <Button
+                  variant='outline'
+                  size='lg'
+                  asChild
+                  className='border-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-cyan shadow-sm'>
+                  <Link href='mailto:seoheejun@gmail.com'>Send Email →</Link>
+                </Button>
               </div>
             </div>
           </div>

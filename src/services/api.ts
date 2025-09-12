@@ -1,11 +1,10 @@
-import { APP_CONFIG } from '@/constants/config';
 import { ApiResponse, ErrorResponse } from '@/types/common';
 
 class ApiService {
   private baseUrl: string;
 
   constructor() {
-    this.baseUrl = APP_CONFIG.apiBaseUrl;
+    this.baseUrl = process.env.NEXT_PUBLIC_API_URL || '/api';
   }
 
   private async handleResponse<T>(response: Response): Promise<ApiResponse<T>> {

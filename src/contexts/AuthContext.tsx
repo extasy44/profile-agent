@@ -1,8 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { authService } from '@/services/authService';
-import { useRouter } from 'next/navigation';
+import { createContext, useContext, ReactNode } from 'react';
 
 interface User {
   id: string;
@@ -24,72 +22,35 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const user = await authService.getUser();
-      setUser(user);
-    } catch (error) {
-      console.error('Auth check failed:', error);
-    } finally {
-      setIsLoading(false);
-    }
+  // Mock user for portfolio demonstration
+  const user: User | null = {
+    id: 'demo-user',
+    name: 'Heejun Seo',
+    email: 'seoheejun@gmail.com',
+    provider: 'google',
   };
 
   const loginWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      const { user } = await authService.loginWithGoogle();
-      setUser(user);
-      router.push('/chat');
-    } catch (error) {
-      console.error('Google login failed:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
+    // Mock implementation for portfolio
+    console.log('Mock Google login');
   };
 
   const loginWithGithub = async () => {
-    setIsLoading(true);
-    try {
-      const { user } = await authService.loginWithGithub();
-      setUser(user);
-      router.push('/chat');
-    } catch (error) {
-      console.error('Github login failed:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
+    // Mock implementation for portfolio
+    console.log('Mock GitHub login');
   };
 
   const logout = async () => {
-    setIsLoading(true);
-    try {
-      await authService.logout();
-      setUser(null);
-      router.push('/');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    // Mock implementation for portfolio
+    console.log('Mock logout');
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        isLoading,
-        isAuthenticated: !!user,
+        isLoading: false,
+        isAuthenticated: true,
         loginWithGoogle,
         loginWithGithub,
         logout,
