@@ -14,7 +14,7 @@ export default function ProfilePage() {
         <ThemeSwitcher />
       </div>
 
-      <div className='max-w-[1000px] mx-auto py-16 px-4 sm:px-6 lg:px-8 lg:ml-32'>
+      <div className='max-w-[1000px] mx-auto py-16 px-4 sm:px-6 lg:px-8'>
         {/* Header Section */}
         <div className='text-center mb-16'>
           <div className='inline-block mb-8'>
@@ -41,7 +41,7 @@ export default function ProfilePage() {
 
         {/* Chat Section */}
         <div className={cn(cardVariants({ variant: 'elevated', padding: 'none' }), 'overflow-hidden')}>
-          <div className='p-8 border-b border-border'>
+          <div className='p-8 border-b border-border text-center'>
             <h2 className={cn(headingVariants({ level: 3 }), 'mb-2')}>Interactive Chat</h2>
             <p className={cn(typographyVariants({ variant: 'muted', size: 'default' }))}>
               Ask me anything about my professional background
@@ -53,14 +53,10 @@ export default function ProfilePage() {
         {/* Quick Actions */}
         <div className='mt-12 text-center'>
           <div className='flex justify-center gap-4 flex-wrap'>
-            <Link
-              href='/'
-              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}>
+            <Link href='/' className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}>
               ← Back to Portfolio
             </Link>
-            <Link
-              href='mailto:seoheejun@gmail.com'
-              className={cn(buttonVariants({ variant: 'brand', size: 'lg' }))}>
+            <Link href='mailto:seoheejun@gmail.com' className={cn(buttonVariants({ variant: 'brand', size: 'lg' }))}>
               Contact Me
             </Link>
           </div>
